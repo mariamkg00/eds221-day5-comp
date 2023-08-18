@@ -1,0 +1,47 @@
+---
+title: "Testing Functions"
+format: html
+editor: visual
+---
+
+```{r}
+library(testthat)
+```
+
+## Write a function and test it
+
+```{r}
+mean_range <- function(df) {
+  col_means <- apply(X=df, MARGIN = 2, FUN = mean, na.rm = TRUE)
+  col_mean_max <- max(col_means)
+  col_mean_min <- min(col_means)
+  return(c(col_mean_min, col_mean_max))
+}
+```
+
+```{r}
+mean_range(mtcars)
+```
+
+```{r}
+mean_range(faithful)
+```
+
+what would make sense to test here? you would want to check if the length of the column is at least two.
+
+write some unit tests using testthat\
+
+```{r}
+expect_length(mean_range(mtcars), 2)
+
+#if nothing is returning then it passes. 
+```
+
+```{r}
+expect_type(mean_range(mtcars), "double")
+#mt cars is returning a double
+```
+
+```{r}
+expect_true(mean_range(mtcars)[1] <= mean_range(mtcars)[2])
+```
